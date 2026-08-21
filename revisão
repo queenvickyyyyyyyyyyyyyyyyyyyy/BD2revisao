@@ -1,0 +1,79 @@
+create table Hospedes(
+	hospede_id serial Primary Key,
+	nome VARCHAR (100),
+	email VARCHAR (100)
+);
+
+create table Quartos(
+	quarto_id serial Primary Key,
+	tipo_quarto VARCHAR,
+	preco_night DECIMAL (10, 2)
+
+);
+
+create table Reservas(
+	reserva_id serial Primary Key,
+	data_checkin date,
+	data_checkout date,
+	preco DECIMAL (10, 2),
+	hospede_id integer, 
+	Foreign Key (hospede_id) REFERENCES Hospedes (hospede_id),
+	quarto_id integer,
+	Foreign Key (quarto_id) REFERENCES Quartos (quarto_id)
+
+);
+
+insert into Hospedes (nome, email)
+VALUES('Maria Silva', 'maria@gmail.com'),
+	  ('João Pereira', 'joao@gmail.com'),
+	  ('Paulo Santos', 'paulo@gmail.com'),
+	  ('Rafaela Martins', 'rafaela@gmail.com'),
+	  ('Karen Ferreira', 'karen@gmail.com');
+
+insert into Quartos (tipo_quarto, preco_night)
+VALUES('Standard', 500),
+	  ('Luxo', 250),
+	  ('Suíte', 100);
+
+insert into Reservas (data_checkin, data_checkout, preco, hospede_id, quarto_id)
+VALUES('2026-08-22', '2026-08-25',1000 ,1, 2),
+	  ('2026-08-22', '2026-08-28',3500 ,5 , 1),
+	  ('2026-08-23', '2026-08-24',200 ,3, 3);
+
+select * from Hospedes where hospede_id = 1;
+
+select h.hospede_id, h.nome,
+sum(r.preco) as preco_total
+from Hospedes h
+inner join Reservas r on h.hospede_id = r.hospede_id
+group by h.hospede_id, h.nome;
+
+select hospede_id, 
+sum(preco) as preco_total
+from Reservas r
+group by hospede_id
+having sum(preco) > 2000;
+
+select quarto_id,
+avg(preco) as preco_total
+from Reservas r
+group by quarto_id;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
