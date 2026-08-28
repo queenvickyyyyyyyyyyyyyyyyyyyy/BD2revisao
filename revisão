@@ -59,21 +59,27 @@ avg(preco) as preco_total
 from Reservas r
 group by quarto_id;
 
+select quarto_id, --4
+sum(preco) as preco_total
+from Reservas
+group by quarto_id;
 
+select hospede_id, count(reserva_id) as quantidade_reservas --5
+from Reservas
+group by hospede_id
+order by quantidade_reservas desc;
 
+select quarto_id, count(reserva_id) as quantidade_reservas, sum(preco) as total_precos --6
+from Reservas
+group by quarto_id
+having count(reserva_id) > 5;
 
+select quarto_id, avg(preco) as preco_medio --7 preco medio da reserva acima de 500
+from Reservas
+group by quarto_id
+having avg(preco) > 500;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+select hospede_id, max(preco) as maior_reserva --7 hospedes que tiveram uma reserva acima  ou igual a 1000
+from Reservas
+group by hospede_id
+having max(preco) >= 1000;
