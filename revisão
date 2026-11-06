@@ -42,19 +42,17 @@ VALUES('2026-08-22', '2026-08-25',1000 ,1, 2),
 
 select * from Hospedes where hospede_id = 1;
 
-select h.hospede_id, h.nome,
-sum(r.preco) as preco_total
-from Hospedes h
-inner join Reservas r on h.hospede_id = r.hospede_id
-group by h.hospede_id, h.nome;
+SELECT r.hospede_id, SUM(r.preco) AS preco_total --1
+FROM Reservas r
+GROUP BY r.hospede_id;
 
-select hospede_id, 
+select hospede_id, --2
 sum(preco) as preco_total
 from Reservas r
 group by hospede_id
 having sum(preco) > 2000;
 
-select quarto_id,
+select quarto_id, ---3
 avg(preco) as preco_total
 from Reservas r
 group by quarto_id;
